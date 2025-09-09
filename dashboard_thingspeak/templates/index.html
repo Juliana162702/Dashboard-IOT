@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dashboard IoT - ThingSpeak</title>
+  <style>
+    :root {
+      --primary-color: #005f73;
+      --secondary-color: #0a9396;
+      --accent-color: #94d2bd;
+      --bg-color: #f0f4f8;
+      --text-color: #333;
+      --card-bg: #ffffff;
+      --shadow-color: rgba(0, 95, 115, 0.15);
+      --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    /* Reset */
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: var(--font-family);
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem;
+    }
+
+    h1 {
+      color: var(--primary-color);
+      font-weight: 700;
+      font-size: 2.5rem;
+      margin-bottom: 2rem;
+      text-align: center;
+      letter-spacing: 0.05em;
+    }
+
+    .dashboard {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      width: 100%;
+      max-width: 1000px;
+    }
+
+    /* Metric Cards */
+    .metric-card {
+      background-color: var(--card-bg);
+      box-shadow: 0 4px 12px var(--shadow-color);
+      border-radius: 1rem;
+      padding: 2rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .metric-card:hover,
+    .metric-card:focus-within {
+      transform: translateY(-6px);
+      box-shadow: 0 8px 24px var(--shadow-color);
+      outline: none;
+    }
+
+    .metric-label {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--secondary-color);
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .metric-value {
+      font-size: 3.5rem;
+      font-weight: 800;
+      color: var(--primary-color);
+      line-height: 1;
+    }
+
+    /* Graphs Container */
+    .graphs-container {
+      grid-column: 1 / -1;
+      display: grid;
+      gap: 2rem;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      width: 100%;
+    }
+
+    .plotly-graph-div {
+      background-color: var(--card-bg);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      box-shadow: 0 4px 12px var(--shadow-color);
+      min-width: 320px;
+      min-height: 300px;
+    }
+
+    /* Responsive for graphs */
+    @media (max-width: 720px) {
+      .graphs-container {
+        grid-template-columns: 1fr;
+      }
+      .metric-value {
+        font-size: 2.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>🌡️ Dashboard IoT - Umidade e Temperatura</h1>
+
+  <div class="dashboard" role="main" aria-label="Dashboard de Temperatura e Umidade">
+    <section class="metric-card" tabindex="0" aria-labelledby="temp-label temp-value">
+      <div class="metric-label" id="temp-label">Temperatura Atual</div>
+      <div class="metric-value" id="temp-value">{{ last_temp }} °C</div>
+    </section>
+
+    <section class="metric-card" tabindex="0" aria-labelledby="humidity-label humidity-value">
+      <div class="metric-label" id="humidity-label">Umidade Atual</div>
+      <div class="metric-value" id="humidity-value">{{ last_umidade }} %</div>
+    </section>
+
+    <section class="graphs-container">
+      <div class="plotly-graph-div" aria-label="Gráfico de temperatura">
+        {{ temp_plot | safe }}
+      </div>
+
+      <div class="plotly-graph-div" aria-label="Gráfico de umidade">
+        {{ umidade_plot | safe }}
+      </div>
+    </section>
+  </div>
+</body>
+</html>
