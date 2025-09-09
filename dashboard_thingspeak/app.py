@@ -6,8 +6,8 @@ import plotly.graph_objs as go
 app = Flask(__name__)
 
 # Configurações
-THINGSPEAK_CHANNEL_ID = '2943258'
-THINGSPEAK_API_KEY = 'G3BDQS6I5PRGFEWR'  # Deixe vazio '' se o canal for público
+THINGSPEAK_CHANNEL_ID = 'coloque seu chanel id'
+THINGSPEAK_API_KEY = 'Coloque sua api kay'  # Deixe vazio '' se o canal for público
 NUM_RESULTS = 100
 THINGSPEAK_URL = f"https://api.thingspeak.com/channels/{THINGSPEAK_CHANNEL_ID}/feeds.json"
 
@@ -64,3 +64,4 @@ def index():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
